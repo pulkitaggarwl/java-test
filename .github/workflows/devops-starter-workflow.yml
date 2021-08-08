@@ -147,3 +147,18 @@ jobs:
       run: |
         cd testartifacts
         java -DwebAppUrl="https://${{ env.AZURE_WEBAPP_NAME }}.azurewebsites.net/" -DChromeWebDriver="$env:ChromeWebDriver" -cp SampleWebAppFunctionalTests-jar-with-dependencies.jar org.junit.platform.console.ConsoleLauncher --class-path SampleWebAppFunctionalTests-jar-with-dependencies.jar --scan-class-path --reports-dir reports --include-engine junit-vintage
+    
+  Mabltest:
+    name: mabl Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Functional test deployment
+        id: mabl-test-deployment
+        uses: mablhq/github-run-tests-action@v1
+        env:
+          MABL_API_KEY: ${{ secrets.MABL_API_KEY }}
+        with:
+          application-id: i1jgzbqX92uBmAHH9WArbg-a
+       
