@@ -57,6 +57,39 @@ public class SampleFunctionalTest {
             }
         }
     }
+	
+    
+    @Test
+    public void testAssertTitleWithSelenium1() throws InterruptedException, AssertionError {
+        if (isAlertPresent()) {
+            System.out.println(isAlertPresent());
+            driver.switchTo().alert().accept();
+        }
+        
+        long startTimestamp = (new Date()).getTime();
+        long endTimestamp = startTimestamp + 60*10*1000;
+        
+        while(true)
+        {
+            try
+            {
+                driver.get(System.getProperty("webAppUrl"));
+                assertEquals("Sample JSF Application", driver.getTitle());
+                break;
+            }
+            catch(AssertionError e)
+            {
+                startTimestamp = (new Date()).getTime();
+                if(startTimestamp > endTimestamp)
+                {
+                    System.out.println("##vso[task.logissue type=error;]Test testAssertTitleWithSelenium failed with error: " + e.toString());
+                    throw e;
+                }
+                Thread.sleep(5000);
+            }
+        }
+    }
+
     
     protected boolean isAlertPresent() {
         try {
